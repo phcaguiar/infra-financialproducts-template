@@ -1,0 +1,28 @@
+name: Split
+description: |
+    Split is a transactional API that is intended to split a single transaction between multiple participants with flexible business rules. In practice, we take customer's concerns about the settlement process, as well as the management of receivables.
+    The objective of the product is therefore to provide greater operational efficiency for the client and to attend to any and all business models that partially pass on their financial flow to third parties.
+requester:
+    - name: João Reis
+      email: jreis@stone.com.br
+leader:
+    - name: João Reis
+      email: jreis@stone.com.br
+    - name: Luan Martins
+      email: lcmartins@stone.com.br
+team: Travas
+start_date: 2017/07/01
+first_deploy_to_production_date: 2017/08/15
+applications:
+    - https://github.com/stone-payments/split
+    - https://github.com/stone-payments/split-receivable-advance-api
+    - https://github.com/stone-payments/transaction-scout
+    - https://github.com/stone-payments/mim
+    - https://github.com/stone-payments/internal-transfer-v2
+documents:
+    business_requirements: https://stonepayments.atlassian.net/wiki/spaces/SplitPayment/pages/100744934/Escopo+do+Projeto
+    project_tracking: https://stonepagamentos.visualstudio.com/Produtos%20Financeiros/Split
+    project_architecture: https://stonepayments.atlassian.net/wiki/spaces/Infraprojects/pages/101163274/SPLIT+Pagamentos
+    changelog: https://stonepayments.atlassian.net/wiki/spaces/SplitPayment/pages/100744689/Versionamento
+    monitoring: https://stonepayments.atlassian.net/wiki/spaces/SplitPayment/pages/416416765/Monitoramento
+    infrastructure: https://stonepayments.atlassian.net/wiki/spaces/Infraprojects/pages/101163274/SPLIT+Pagamentos

@@ -1,0 +1,15 @@
+split_dns_records:
+  - zone: apps.stone.com.br
+    records: 
+      - record: split
+        type: CNAME
+        value: "split.financialproducts.stone.com.br."
+        ttl: 30
+        state: "{{ split_record_state }}"
+  - zone: financialproducts.stone.com.br
+    records: 
+      - record: split
+        type: CNAME
+        value: "split.dca.financialproducts.stone.com.br."
+        ttl: 30
+        state: "{{ split_record_state }}"

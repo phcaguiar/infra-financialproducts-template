@@ -1,0 +1,12 @@
+---
+- name: Configure DNS records for Split
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tags:
+    - dns
+  roles:
+    - stone-payments.dnsrecord
+  vars:
+    dnsrecord_list: "{{ split_dns_records }}"
+    credit_record_state : present
