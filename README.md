@@ -10,7 +10,7 @@ repo. See the docs/README.md there for information about these repos' organizati
 
 **You should adapt this README** to match your own product. We suggest you update and mantain in this README at least the sections presented here, and you can add other as you wish.
 
-### IaC Softwares Versions
+### IaC Softwares Versions Supported
 
 - Terraform >= `0.12.4`
 - Azure Provider >= `1.31.0`
