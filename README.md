@@ -13,7 +13,7 @@ repo. See the docs/README.md there for information about these repos' organizati
 ### IaC Softwares Versions
 
 - Terraform >= `0.12.4`
-- AzureRM Provider >= `1.31.0`
+- Azure Provider >= `1.31.0`
 - Ansible >= `2.8`
 
 ### Pipeline Status
