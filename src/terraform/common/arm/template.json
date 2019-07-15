@@ -1,0 +1,82 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlFailoverGroupName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the failover group."
+            }
+        },
+        "sqlServerPrimaryName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the primary SQL Server."
+            }
+        },
+        "sqlServerSecondaryName": {
+            "type": "string",
+            "metadata": {
+                "description": "The list of names of the secondary SQL Server."
+            }
+        },
+        "failoverDatabases": {
+            "type": "string",
+            "metadata": {
+                "description": "The names of the SQL Databases, separated by commas."
+            }
+        },
+        "readWriteEndpointFailoverPolicy": {
+            "type": "string",
+            "metadata": {
+                "description": "Failover Policy for Read Write Endpoint. Expected values: \"Automatic\" or \"Manual\", "
+            }
+        },
+        "readWriteEndpointFailoverWithDataLossGracePeriodMinutes": {
+            "type": "string",
+            "metadata": {
+                "description": "Failover DataLoss Grace Period in Minutes. Default: 60 min"
+            }
+        },
+        "readOnlyEndpointFailoverPolicy": {
+            "type": "string",
+            "metadata": {
+                "description": "Failover Policy for Read Only Endpoint. Expected values: \"Disabled\" or \"Enabled\", "
+            }
+        }
+    },
+    "variables": {
+        "readWriteEndpointFailoverWithDataLossGracePeriodMinutesInt" : "[int(parameters('readWriteEndpointFailoverWithDataLossGracePeriodMinutes'))]",
+        "failoverDatabasesArray": "[split(parameters('failoverDatabases'), ',')]",
+        "copy": [
+            {
+                "name": "databases",
+                "count": "[length(variables('failoverDatabasesArray'))]",
+                "input": "[resourceId('Microsoft.Sql/servers/databases', parameters('sqlServerPrimaryName'), variables('failoverDatabasesArray')[copyIndex('databases')])]"
+            }
+        ]
+        
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Sql/servers/failoverGroups",
+            "name": "[concat(parameters('sqlServerPrimaryName'), '/', parameters('sqlFailoverGroupName'))]",
+            "apiVersion": "2015-05-01-preview",
+            "properties": {
+                "readWriteEndpoint": {
+                    "failoverPolicy": "[parameters('readWriteEndpointFailoverPolicy')]",
+                    "failoverWithDataLossGracePeriodMinutes": "[variables('readWriteEndpointFailoverWithDataLossGracePeriodMinutesInt')]"
+                },
+                "partnerServers": [
+                    {
+                        "id": "[resourceId('Microsoft.Sql/servers', parameters('sqlServerSecondaryName'))]"
+                    }
+                ],
+                "readOnlyEndpoint": {
+                    "failoverPolicy": "[parameters('readOnlyEndpointFailoverPolicy')]"
+                },
+                "databases": "[variables('databases')]"
+            }
+        }
+    ]
+}
